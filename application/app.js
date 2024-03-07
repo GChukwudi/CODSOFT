@@ -7,6 +7,16 @@ require("dotenv").config();
 var cors = require('cors');
 
 
+
+// db connection
+mongoose.connect(process.env.DATABASE, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false
+}).then(() => console.log("DB Connected"))
+.catch((err)=> console.log(err));
+
 // port
 const port = process.env.PORT || 8000;
 
