@@ -38,7 +38,7 @@ app.use(cors());
 // app.get('/', (req, res) => {
 //     res.send('Hello from Node');
 // })
-app.use('/', authRoutes)
+app.use('/api', authRoutes)
 
 // error middleware
 app.use(errorHandler);
