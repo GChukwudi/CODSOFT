@@ -30,6 +30,11 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(cors());
 
+// route
+// app.get('/', (req, res) => {
+//     res.send('Hello from Node');
+// })
+
 // error middleware
 app.use(errorHandler);
 
