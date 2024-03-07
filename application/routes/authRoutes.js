@@ -1,5 +1,5 @@
 const express = require('express');
-const { sign } = require('jsonwebtoken');
+const { signin } = require('../controllers/authControllers');
 const router = express.Router();
 
 // auth routes
