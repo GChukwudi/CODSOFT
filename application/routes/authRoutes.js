@@ -1,9 +1,8 @@
 const express = require('express');
+const { sign } = require('jsonwebtoken');
 const router = express.Router();
 
 // auth routes
-router.get('/', (req, res) => {
-    res.send('Hello from Node');
-})
+router.get('/', signin)
 
 module.exports = router;
