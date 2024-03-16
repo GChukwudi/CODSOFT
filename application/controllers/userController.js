@@ -21,6 +21,7 @@ exports.allUsers = async (req, res, next) => {
             pages: Math.ceil(count / pageSize),
             count
         });
+        next();
     } catch (error) {
         return next(error);
     }
