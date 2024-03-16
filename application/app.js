@@ -12,6 +12,7 @@ const errorHandler = require('./middleware/error');
 
 // import routes
 const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 
 // db connection
