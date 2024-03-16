@@ -18,3 +18,12 @@ exports.isAuthenticated = async (req, res, next) => {
         return next(new ErrorResponse('Not authorized to access this route', 401));
     }
 }
+
+
+// check if user is admin
+exports.isAdmin = async (req, res, next) => {
+    if (req.user.role === 0) {
+        return next(new ErrorResponse('Not authorized to access this route', 401));
+    }
+    next();
+}
