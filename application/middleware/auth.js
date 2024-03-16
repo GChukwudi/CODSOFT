@@ -13,7 +13,8 @@ exports.isAuthenticated = async (req, res, next) => {
         // verify token
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.user = await User.findById(decoded.id);
+        next();
     } catch (error) {
-        next(error);
+        return next(new ErrorResponse('Not authorized to access this route', 401));
     }
 }
