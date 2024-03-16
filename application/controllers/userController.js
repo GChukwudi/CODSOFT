@@ -10,6 +10,6 @@ exports.allUsers = async (req, res, next) => {
             users
         });
     } catch (error) {
-        next(error);
+        return next(error);
     }
 }
