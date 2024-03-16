@@ -10,7 +10,8 @@ exports.allUsers = async (req, res, next) => {
     const count = await User.find({}).estimatedDocumentCount();
 
     try {
-        const users = await User.find().sort({ createdAt });
+        const users = await User.find().sort({ createdAt: -1 }).select('-password')
+        .skip(pageSize * (page - 1))
         res.status(200).json({
             success: true,
             users
