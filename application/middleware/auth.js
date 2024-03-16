@@ -10,6 +10,8 @@ exports.isAuthenticated = async (req, res, next) => {
         return next(new ErrorResponse('Not authorized to access this route', 401));
     }
     try {
+        // verify token
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
         
     } catch (error) {
         next(error);
