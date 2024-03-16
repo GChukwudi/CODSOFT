@@ -11,7 +11,8 @@ exports.allUsers = async (req, res, next) => {
 
     try {
         const users = await User.find().sort({ createdAt: -1 }).select('-password')
-        .skip(pageSize * (page - 1))
+            .skip(pageSize * (page - 1))
+            .limit(pageSize);
         res.status(200).json({
             success: true,
             users
