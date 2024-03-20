@@ -14,7 +14,7 @@ router.post('/job/create', isAuthenticated, isAdmin, createJob)
 router.get('/job/:id', singleJob)
 
 // /api/job/update/jobId
-router.put('/job/update/:jobId', isAuthenticated, updateJob)
+router.put('/job/update/:jobId', isAuthenticated, isAdmin, updateJob)
 
 
 module.exports = router;
