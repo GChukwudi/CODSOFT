@@ -22,6 +22,20 @@ exports.createJob = async (req, res, next) => {
     }
 }
 
+// update job
+exports.updateJob = async (req, res, next) => {
+    try {
+        const job = await Job.findByIdAndUpdate(req.params.jobId, req.body, {new: true}).populate('JobType, jobTypeName').populate('user', 'firstName lastName');
+        res.status(200).json({
+            success: true,
+            job
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+}
+
 // single job
 exports.singleJob = async (req, res, next) => {
     try {
@@ -40,12 +54,12 @@ exports.singleJob = async (req, res, next) => {
 exports.showJobs = async (req, res, next) => {
 
     // enable pagination
-    const pageSize = 10;
+    const pageSize = 3;
     const page = Number(req.query.pageNumber) || 1;
     const count = await Job.find({}).estimatedDocumentCount();
 
     try {
-        const job = await Job.find()
+        const job = await Job.find({}).populate('JobType', 'jobTypeName').populate('user', 'firstName lastName').limit(pageSize).skip(pageSize * (page - 1));
         res.status(200).json({
             success: true,
             job,
@@ -54,20 +68,6 @@ exports.showJobs = async (req, res, next) => {
             count
         });
     } catch (error) {
-        next(error);
-    }
-}
-
-// update job
-exports.updateJob = async (req, res, next) => {
-    try {
-        const job = await Job.findByIdAndUpdate(req.params.jobId, req.body, {new: true}).populate('JobType, jobTypeName').populate('user', 'firstName lastName');
-        res.status(200).json({
-            success: true,
-            job
-        });
-    }
-    catch (error) {
         next(error);
     }
 }
