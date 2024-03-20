@@ -17,3 +17,17 @@ exports.createJobType = async (req, res, next) => {
         next(error);
     }
 }
+
+// get all job categories
+exports.allJobTypes = async (req, res, next) => {
+    try {
+        const jobTypes = await JobType.find();
+        res.status(200).json({
+            success: true,
+            jobT
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+}
