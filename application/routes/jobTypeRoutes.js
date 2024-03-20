@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { createJobType } = require('../controllers/jobTypeController');
-const { isAuthenticated } = require('../middlewares/auth');
+const { isAuthenticated } = require('../middleware/auth');
 
 
 // jobType routes

@@ -5,15 +5,16 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 require("dotenv").config();
 var cors = require('cors');
-const cookieParser = require("cookie-parser");
-const errorHandler = require('./middleware/error');
-
 
 
 // import routes
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const jobTypeRoutes = require('./routes/jobTypeRoutes');
+
+// middleware
+const cookieParser = require("cookie-parser");
+const errorHandler = require('./middleware/error');
 
 
 // db connection
