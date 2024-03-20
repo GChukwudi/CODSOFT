@@ -11,5 +11,7 @@ router.get('/allusers', isAuthenticated, isAdmin, allUsers);
 // /api/user/:id
 router.get('/user/:id', isAuthenticated, singleUser);
 router.put('/user/edit/:id', isAuthenticated, editUser);
+// /api/user/delete/:id
+router.delete('/admin/user/delete/:id', isAuthenticated, isAdmin, deleteUser);
 
 module.exports = router;
