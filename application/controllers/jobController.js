@@ -2,7 +2,7 @@ const Job= require('../models/jobModel');
 const ErrorResponse = require('../utils/errorResponse');
 
 
-// create job category
+// create job
 exports.createJob = async (req, res, next) => {
     try {
         const job = await Job.create({
@@ -21,3 +21,18 @@ exports.createJob = async (req, res, next) => {
         next(error);
     }
 }
+
+// single job
+exports.singleJob = async (req, res, next) => {
+    try {
+        const job = await Job.findById(req.params.id);
+        res.status(200).json({
+            success: true,
+            job
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+}
+
