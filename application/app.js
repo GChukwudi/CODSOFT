@@ -11,6 +11,7 @@ var cors = require('cors');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const jobTypeRoutes = require('./routes/jobTypeRoutes');
+const jobRoutes = require('./routes/jobRoutes');
 
 // middleware
 const cookieParser = require("cookie-parser");
