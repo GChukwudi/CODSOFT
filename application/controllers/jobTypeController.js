@@ -1,4 +1,4 @@
-const createJobTypeobType = require('../models/jobTypeModel');
+const JobType = require('../models/jobTypeModel');
 const ErrorResponse = require('../utils/errorResponse');
 
 
@@ -6,7 +6,7 @@ const ErrorResponse = require('../utils/errorResponse');
 exports.createJobType = async (req, res, next) => {
     try {
         const jobT = await JobType.create({
-            JobTypeName: req.body.JobTypeName,
+            jobTypeName: req.body.jobTypeName,
             user: req.user.id
         });
         res.status(201).json({

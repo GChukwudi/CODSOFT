@@ -4,7 +4,7 @@ const { ObjectId } = mongoose.Schema;
 
 const jobTypeSchema = new mongoose.Schema({
 
-    JobTypeName: {
+    jobTypeName: {
         type: String,
         trim: true,
         required: [true, 'Please add a job category name'],
