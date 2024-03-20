@@ -12,6 +12,6 @@ router.get('/allusers', isAuthenticated, isAdmin, allUsers);
 router.get('/user/:id', isAuthenticated, singleUser);
 router.put('/user/edit/:id', isAuthenticated, editUser);
 // /api/user/delete/:id
-router.delete('/admin/user/delete/:id', isAuthenticated, isAdmin, deleteUser);
+router.delete('/admin/user/delete/:id', isAuthenticated, deleteUser);
 
 module.exports = router;

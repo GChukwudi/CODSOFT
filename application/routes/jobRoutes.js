@@ -8,13 +8,13 @@ const { createJob, singleJob, updateJob } = require('../controllers/jobControlle
 // jobType routes
 
 // /api/job/create
-router.post('/job/create', isAuthenticated, isAdmin, createJob)
+router.post('/job/create', isAuthenticated, createJob)
 
 // /api/job/id
 router.get('/job/:id', singleJob)
 
 // /api/job/update/jobId
-router.put('/job/update/:jobId', isAuthenticated, isAdmin, updateJob)
+router.put('/job/update/:jobId', isAuthenticated, updateJob)
 
 
 module.exports = router;
