@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const { isAuthenticated } = require('../middleware/auth');
-const { createJob, singleJob } = require('../controllers/jobController');
+const { createJob, singleJob, updateJob } = require('../controllers/jobController');
 
 
 // jobType routes
@@ -10,8 +10,11 @@ const { createJob, singleJob } = require('../controllers/jobController');
 // /api/job/create
 router.post('/job/create', isAuthenticated, createJob)
 
-// /api/job/:id
+// /api/job/id
 router.get('/job/:id', singleJob)
+
+// /api/job/update/jobId
+router.put('/job/update/:jobId', isAuthenticated, updateJob)
 
 
 module.exports = router;
