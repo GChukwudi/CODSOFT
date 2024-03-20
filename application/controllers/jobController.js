@@ -36,6 +36,28 @@ exports.singleJob = async (req, res, next) => {
     }
 }
 
+// show all jobs
+exports.showJobs = async (req, res, next) => {
+
+    // enable pagination
+    const pageSize = 10;
+    const page = Number(req.query.pageNumber) || 1;
+    const count = await Job.find({}).estimatedDocumentCount();
+
+    try {
+        const job = await Job.find()
+        res.status(200).json({
+            success: true,
+            job,
+            page,
+            pages: Math.ceil(count / pageSize),
+            count
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
 // update job
 exports.updateJob = async (req, res, next) => {
     try {
