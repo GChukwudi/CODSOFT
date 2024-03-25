@@ -76,10 +76,10 @@ exports.showJobs = async (req, res, next) => {
     const pageSize = 5;
     const page = Number(req.query.pageNumber) || 1;
     // const count = await Job.find({}).estimatedDocumentCount();
-    const count = await Job.find({...keyword}).countDocuments();
+    const count = await Job.find({ ...keyword, JobType: categ }).countDocuments();
 
     try {
-        const job = await Job.find({...keyword}).skip(pageSize * (page - 1)).limit(pageSize);
+        const job = await Job.find({ ...keyword }).skip(pageSize * (page - 1)).limit(pageSize);
         res.status(200).json({
             success: true,
             job,
