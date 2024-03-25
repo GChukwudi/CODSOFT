@@ -77,6 +77,7 @@ exports.showJobs = async (req, res, next) => {
     jobLocation.forEach(loc => {val => {
         location.push(val.location);
     }});
+    let setUniqueLocation = [ ...new Set(location)]
 
 
     // enable pagination
@@ -93,7 +94,8 @@ exports.showJobs = async (req, res, next) => {
             page,
             pages: Math.ceil(count / pageSize),
             count,
-            location
+            location,
+            setUniqueLocation
         });
     } catch (error) {
         next(error);
