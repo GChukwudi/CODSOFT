@@ -1,5 +1,6 @@
 const Job = require('../models/jobModel');
 const ErrorResponse = require('../utils/errorResponse');
+const JobType = require('../models/jobTypeModel');
 
 
 // create job
@@ -60,11 +61,17 @@ exports.showJobs = async (req, res, next) => {
         }
     } : {};
 
+    // filter by job category
+    let ids = [];
+    cosnt jobTypeCategory = await JobType.find({}, '_id:1');
+
+
 
     // enable pagination
     const pageSize = 5;
     const page = Number(req.query.pageNumber) || 1;
-    const count = await Job.find({}).estimatedDocumentCount();
+    // const count = await Job.find({}).estimatedDocumentCount();
+    const count = await Job.find({...keyword}).countDocuments();
 
     try {
         const job = await Job.find({...keyword}).skip(pageSize * (page - 1)).limit(pageSize);
