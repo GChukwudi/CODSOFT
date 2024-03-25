@@ -68,6 +68,8 @@ exports.showJobs = async (req, res, next) => {
         ids.push(cat._id);
     });
 
+    let cat = req.query.cat;
+
 
     // enable pagination
     const pageSize = 5;
@@ -82,8 +84,7 @@ exports.showJobs = async (req, res, next) => {
             job,
             page,
             pages: Math.ceil(count / pageSize),
-            count,
-            ids
+            count
         });
     } catch (error) {
         next(error);
