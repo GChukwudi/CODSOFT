@@ -73,6 +73,10 @@ exports.showJobs = async (req, res, next) => {
 
     // search by job loxation
     let location = [];
+    const jobLocation = await Job.find({}, { location: 1 });
+    jobLocation.forEach(loc => {val => {
+        location.push(val.location);
+    }});
 
 
     // enable pagination
@@ -88,7 +92,8 @@ exports.showJobs = async (req, res, next) => {
             job,
             page,
             pages: Math.ceil(count / pageSize),
-            count
+            count,
+            location,
         });
     } catch (error) {
         next(error);
