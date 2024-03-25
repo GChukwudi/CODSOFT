@@ -69,6 +69,7 @@ exports.showJobs = async (req, res, next) => {
     });
 
     let cat = req.query.cat;
+    let categ = cat !== '' ? cat : ids;
 
 
     // enable pagination
