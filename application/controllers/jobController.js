@@ -59,7 +59,7 @@ exports.showJobs = async (req, res, next) => {
     const count = await Job.find({}).estimatedDocumentCount();
 
     try {
-        const job = await Job.find({}).populate('JobType', 'jobTypeName').populate('user', 'firstName lastName').limit(pageSize).skip(pageSize * (page - 1));
+        const job = await Job.find().skip(pageSize * (page - 1)).limit(pageSize);
         res.status(200).json({
             success: true,
             job,
