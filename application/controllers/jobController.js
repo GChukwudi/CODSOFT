@@ -64,8 +64,9 @@ exports.showJobs = async (req, res, next) => {
     // filter by job category
     let ids = [];
     const jobTypeCategory = await JobType.find({}, '_id:1');
-    
-
+    JobTypeCategory.forEach(cat => {
+        ids.push(cat._id);
+    });
 
 
     // enable pagination
@@ -81,7 +82,8 @@ exports.showJobs = async (req, res, next) => {
             job,
             page,
             pages: Math.ceil(count / pageSize),
-            count
+            count,
+            ids
         });
     } catch (error) {
         next(error);
