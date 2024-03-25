@@ -71,6 +71,9 @@ exports.showJobs = async (req, res, next) => {
     let cat = req.query.cat;
     let categ = cat !== '' ? cat : ids;
 
+    // search by job loxation
+    let location = [];
+
 
     // enable pagination
     const pageSize = 5;
