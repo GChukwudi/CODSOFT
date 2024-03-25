@@ -93,7 +93,7 @@ exports.showJobs = async (req, res, next) => {
             page,
             pages: Math.ceil(count / pageSize),
             count,
-            location,
+            location
         });
     } catch (error) {
         next(error);
