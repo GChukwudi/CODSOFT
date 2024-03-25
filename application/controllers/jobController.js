@@ -63,7 +63,8 @@ exports.showJobs = async (req, res, next) => {
 
     // filter by job category
     let ids = [];
-    cosnt jobTypeCategory = await JobType.find({}, '_id:1');
+    const jobTypeCategory = await JobType.find({}, '_id:1');
+    
 
 
 
