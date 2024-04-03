@@ -1,12 +1,12 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+import { thunk } from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { loadJobsReducer } from '../reducers/jobReducer';
+import { loadJobReducer } from '../redux/reducers/jobReducer';
 
 
 // combine all reducers
 const reducer = combineReducers({
-    loadJobs: loadJobsReducer
+    loadJobs: loadJobReducer // loadJobs is the key in the state object
 });
 
 
