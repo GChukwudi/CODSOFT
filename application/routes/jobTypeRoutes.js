@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { createJobType, allJobTypes, updateJobType } = require('../controllers/jobTypeController');
+const { createJobType, allJobTypes, updateJobType, deleteJobType } = require('../controllers/jobTypeController');
 const { isAuthenticated, isAdmin } = require('../middleware/auth');
 
 
