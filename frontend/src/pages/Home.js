@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
-import { Box, Container, Stack, Typography, useTheme } from "@mui/system";
+import { Box, Card, Container, Stack, Typography, useTheme } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { jobLoadAction } from "../redux/actions/jobAction";
+
 
 const Home = () => {
     const { palette } = useTheme();
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(jobLoadAction(page, keyword, cat, location))
+    },[])
+
+
+
     return (
         <>
         <Box sx={{ bgcolor: "fafafa", minHeight: "100vh" }}>
