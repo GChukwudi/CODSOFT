@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
-import { Box } from "@mui/system";
+import { Box, Container, Stack, useTheme } from "@mui/system";
 
 const Home = () => {
     const { palette } = useTheme();
