@@ -1,8 +1,8 @@
-### Job Board Website
+# Job Board Website
 
 Welcome to the Job Board Website project! This is a web application where employers can post job openings and job seekers can search and apply for jobs.
 
-#### Features
+## Features
 
 Home Page: Displays a welcome message and featured job listings.
 Job Listings Page: Lists all job openings with essential details.
@@ -15,7 +15,7 @@ Email Notifications: Sends notifications for successful applications and updates
 User Authentication and Security: Ensures secure user login and data protection.
 Mobile Responsiveness: Ensures the website works well on different devices.
 
-#### Technologies Used
+## Technologies Used
 
 Front-End: React.js
 Back-End: Node.js, Express.js
