@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LOAD_JOBS } from '../constants/jobConstant';
+import { LOAD_JOBS, LOAD_JOBS_FAIL, LOAD_JOBS_SUCCESS } from '../constants/jobConstant';
 
 
 export const jobLoadAction = (pageNumber, keyword = '', cat = '', location = '') => async (dispatch) => {
