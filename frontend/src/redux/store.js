@@ -1,7 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { loadJobsReducer } from '../reducers/jobReducers';
+import { loadJobsReducer } from '../reducers/jobReducer';
 
 
 // combine all reducers
