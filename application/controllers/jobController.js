@@ -59,46 +59,51 @@ exports.showJobs = async (req, res, next) => {
             $regex: req.query.keyword,
             $options: 'i'
         }
-    } : {};
+    } : {}
 
-    // filter by job category
+
+    // filter jobs by category ids
     let ids = [];
-    const jobTypeCategory = await JobType.find({}, '_id:1');
-    JobTypeCategory.forEach(cat => {
+    const jobTypeCategory = await JobType.find({}, { _id: 1 });
+    jobTypeCategory.forEach(cat => {
         ids.push(cat._id);
-    });
+    })
 
     let cat = req.query.cat;
     let categ = cat !== '' ? cat : ids;
 
-    // search by job loxation
-    let location = [];
-    const jobLocation = await Job.find({}, { location: 1 });
-    jobLocation.forEach(loc => {val => {
-        location.push(val.location);
-    }});
-    let setUniqueLocation = [ ...new Set(location)]
+
+    //jobs by location
+    let locations = [];
+    const jobByLocation = await Job.find({}, { location: 1 });
+    jobByLocation.forEach(val => {
+        locations.push(val.location);
+    });
+    let setUniqueLocation = [...new Set(locations)];
+    let location = req.query.location;
+    let locationFilter = location !== '' ? location : setUniqueLocation;
 
 
-    // enable pagination
+    //enable pagination
     const pageSize = 5;
     const page = Number(req.query.pageNumber) || 1;
-    // const count = await Job.find({}).estimatedDocumentCount();
-    const count = await Job.find({ ...keyword, JobType: categ }).countDocuments();
+    //const count = await Job.find({}).estimatedDocumentCount();
+    const count = await Job.find({ ...keyword, jobType: categ, location: locationFilter }).countDocuments();
 
     try {
-        const job = await Job.find({ ...keyword }).skip(pageSize * (page - 1)).limit(pageSize);
+        const jobs = await Job.find({ ...keyword, jobType: categ, location: locationFilter }).sort({ createdAt: -1 }).skip(pageSize * (page - 1)).limit(pageSize)
         res.status(200).json({
             success: true,
-            job,
+            jobs,
             page,
             pages: Math.ceil(count / pageSize),
             count,
-            location,
             setUniqueLocation
-        });
+
+        })
     } catch (error) {
         next(error);
     }
 }
+
 
