@@ -1,7 +1,9 @@
+
 class ErrorResponse extends Error {
-  constructor(message, statusCode) {
-    super(message);
-    this.statusCode = statusCode;
-  }
+    constructor(message, codeStatus) {
+        super(message);
+        this.codeStatus = codeStatus;
+    }
 }
+
 module.exports = ErrorResponse;

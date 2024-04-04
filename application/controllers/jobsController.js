@@ -1,9 +1,8 @@
 const Job = require('../models/jobModel');
-const ErrorResponse = require('../utils/errorResponse');
 const JobType = require('../models/jobTypeModel');
+const ErrorResponse = require('../utils/errorResponse');
 
-
-// create job
+//create job
 exports.createJob = async (req, res, next) => {
     try {
         const job = await Job.create({
@@ -11,49 +10,51 @@ exports.createJob = async (req, res, next) => {
             description: req.body.description,
             salary: req.body.salary,
             location: req.body.location,
-            JobType: req.body.JobType,
+            jobType: req.body.jobType,
             user: req.user.id
         });
         res.status(201).json({
             success: true,
             job
-        });
+        })
     } catch (error) {
         next(error);
     }
 }
 
-// update job
-exports.updateJob = async (req, res, next) => {
-    try {
-        const job = await Job.findByIdAndUpdate(req.params.jobId, req.body, {new: true}).populate('JobType, jobTypeName').populate('user', 'firstName lastName');
-        res.status(200).json({
-            success: true,
-            job
-        });
-    }
-    catch (error) {
-        next(error);
-    }
-}
 
-// single job
+//single job
 exports.singleJob = async (req, res, next) => {
     try {
         const job = await Job.findById(req.params.id);
         res.status(200).json({
             success: true,
             job
-        });
-    }
-    catch (error) {
+        })
+    } catch (error) {
         next(error);
     }
 }
 
-// show all jobs
+
+//update job by id.
+exports.updateJob = async (req, res, next) => {
+    try {
+        const job = await Job.findByIdAndUpdate(req.params.job_id, req.body, { new: true }).populate('jobType', 'jobTypeName').populate('user', 'firstName lastName');
+        res.status(200).json({
+            success: true,
+            job
+        })
+    } catch (error) {
+        next(error);
+    }
+}
+
+
+//update job by id.
 exports.showJobs = async (req, res, next) => {
-    // enable search
+
+    //enable search 
     const keyword = req.query.keyword ? {
         title: {
             $regex: req.query.keyword,
@@ -91,7 +92,7 @@ exports.showJobs = async (req, res, next) => {
     const count = await Job.find({ ...keyword, jobType: categ, location: locationFilter }).countDocuments();
 
     try {
-        const jobs = await Job.find({ ...keyword, jobType: categ, location: locationFilter }).sort({ createdAt: -1 }).skip(pageSize * (page - 1)).limit(pageSize)
+        const jobs = await Job.find({ ...keyword, jobType: categ, location: locationFilter }).sort({ createdAt: -1 }).populate('jobType', 'jobTypeName').populate('user', 'firstName').skip(pageSize * (page - 1)).limit(pageSize)
         res.status(200).json({
             success: true,
             jobs,
@@ -105,5 +106,8 @@ exports.showJobs = async (req, res, next) => {
         next(error);
     }
 }
+
+
+
 
 

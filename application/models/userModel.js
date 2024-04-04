@@ -1,60 +1,67 @@
+
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const { ObjectId } = mongoose.Schema;
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 
-const jobHistorySchema = new mongoose.Schema({
+
+const jobsHistorySchema = new mongoose.Schema({
 
     title: {
         type: String,
         trim: true,
-        maxlength: 70
+        maxlength: 70,
     },
+
     description: {
         type: String,
-        trim: true,
-        },
+        trim: true
+    },
     salary: {
-        type: Number,
-        },
+        type: String,
+        trim: true,
+    },
     location: {
-        type: String
+        type: String,
     },
     interviewDate: {
-        type: Date
+        type: Date,
     },
     applicationStatus: {
         type: String,
         enum: ['pending', 'accepted', 'rejected'],
         default: 'pending'
     },
+
     user: {
         type: ObjectId,
-        ref: 'User',
+        ref: "User",
         required: true
     },
 
-}, {timestamps: true});
+
+
+}, { timestamps: true })
 
 const userSchema = new mongoose.Schema({
 
     firstName: {
         type: String,
         trim: true,
-        required: [true, 'Please add your first name'],
-        maxlength: 32
+        required: [true, 'first name is required'],
+        maxlength: 32,
     },
     lastName: {
         type: String,
         trim: true,
-        required: [true, 'Please add your last name'],
-        maxlength: 32
+        required: [true, 'last name is required'],
+        maxlength: 32,
     },
     email: {
         type: String,
         trim: true,
-        required: [true, 'Please add your email'],
+        required: [true, 'e-mail is required'],
         unique: true,
         match: [
             /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
@@ -63,37 +70,40 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: [true, 'Please add a password'],
-        minlength: [6, 'Password must be at least 6 characters long' ],
-        // select: false
+        trim: true,
+        required: [true, 'password is required'],
+        minlength: [6, 'password must have at least (6) caracters'],
     },
-    jobHistory: [jobHistorySchema],
+
+    jobsHistory: [jobsHistorySchema],
+
     role: {
         type: Number,
         default: 0
-    },
-}, {timestamps: true});
+    }
 
-// Password hash middleware
-userSchema.pre('save', async function(next) {
-    // Only run this function if password was actually modified
+}, { timestamps: true })
+
+//encrypting password before saving
+userSchema.pre('save', async function (next) {
     if (!this.isModified('password')) {
         next();
     }
-    // Hash the password
-    this.password = await bcrypt.hash(this.password, 10);
-});
+    this.password = await bcrypt.hash(this.password, 10)
+})
 
-// Compare user password
-userSchema.methods.comparePassword = async function(enteredPassword) {
-    return await bcrypt.compare(enteredPassword, this.password);
+// compare user password
+userSchema.methods.comparePassword = async function (enteredPassword) {
+    return await bcrypt.compare(enteredPassword, this.password)
 }
 
-// Generate JWT token
-userSchema.methods.getSignedJwtToken = function() {
-    return jwt.sign({id: this._id}, process.env.JWT_SECRET, {
+// return a JWT token
+userSchema.methods.getJwtToken = function () {
+    return jwt.sign({ id: this.id }, process.env.JWT_SECRET, {
         expiresIn: 3600
     });
 }
 
-module.exports = mongoose.model('User', userSchema);
+
+
+module.exports = mongoose.model("User", userSchema);

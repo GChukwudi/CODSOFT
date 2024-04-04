@@ -2,77 +2,76 @@
 const User = require('../models/userModel');
 const ErrorResponse = require('../utils/errorResponse');
 
+
 exports.signup = async (req, res, next) => {
     const { email } = req.body;
-    // Check if user Exists
     const userExist = await User.findOne({ email });
-    if (userExist){
-        return next(new ErrorResponse('Email already exists', 400));
+    if (userExist) {
+        return next(new ErrorResponse("E-mail already registred", 400));
     }
     try {
         const user = await User.create(req.body);
         res.status(201).json({
             success: true,
             user
-        });
+        })
     } catch (error) {
         next(error);
     }
 }
+
 
 exports.signin = async (req, res, next) => {
+
     try {
-         const { email, password } = req.body;
-         // Check if user exists
+        const { email, password } = req.body;
+        //validation
         if (!email) {
-            return next(new ErrorResponse('Please provide an email', 403));
+            return next(new ErrorResponse("please add an email", 403));
         }
         if (!password) {
-            return next(new ErrorResponse('Please provide a password', 403));
-        }
-        // Check if user email
-        const user = await User.findOne({ email });
-        if(!user) {
-            return next(new ErrorResponse('Invalid credentials', 400));
+            return next(new ErrorResponse("please add a password", 403));
         }
 
-        // check password
+        //check user email
+        const user = await User.findOne({ email });
+        if (!user) {
+            return next(new ErrorResponse("invalid credentials", 400));
+        }
+        //check password
         const isMatched = await user.comparePassword(password);
         if (!isMatched) {
-            return next(new ErrorResponse('Invalid credentials', 400));
+            return next(new ErrorResponse("invalid credentials", 400));
         }
 
-        // Create token
         sendTokenResponse(user, 200, res);
-
 
     } catch (error) {
         next(error);
     }
 }
 
-const sendTokenResponse = async (user, statusCode, res) => {
-    // Create token
-    const token =  await user.getSignedJwtToken();
+const sendTokenResponse = async (user, codeStatus, res) => {
+    const token = await user.getJwtToken();
     res
-        .status(statusCode)
+        .status(codeStatus)
         .cookie('token', token, { maxAge: 60 * 60 * 1000, httpOnly: true })
         .json({
             success: true,
-            token,
-            user
-        });
+            role: user.role
+        })
 }
 
 
-// logout user
-exports.logout = async (req, res, next) => {
+// log out
+exports.logout = (req, res, next) => {
     res.clearCookie('token');
     res.status(200).json({
         success: true,
-        message: 'User logged out'
-    });
+        message: "logged out"
+    })
 }
+
 
 // user profile
 exports.userProfile = async (req, res, next) => {
@@ -81,7 +80,10 @@ exports.userProfile = async (req, res, next) => {
 
     res.status(200).json({
         success: true,
-        user: req.user,
-        // message: 'User profile'
-    });
+        user
+    })
 }
+
+
+
+
